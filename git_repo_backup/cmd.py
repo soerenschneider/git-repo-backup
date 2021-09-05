@@ -8,6 +8,7 @@ from typing import List, Dict
 from backup import RepoBackup
 from service import Service, Github, Gitlab
 from git_impl import GitProvider, DryRunProvider
+from repo_filter import RepoFilter, AllowListFilter, DenyListFilter, DefaultFilter
 
 
 def start() -> None:
@@ -20,6 +21,7 @@ def start() -> None:
     if args.config:
         config = read_config(args.config)
         verify_config(config)
+
         services = build_services_from_conf(config)
     else:
         services = build_services_from_args(args)
@@ -52,34 +54,13 @@ def parse_args() -> argparse.Namespace:
     parser_gitlab = subparsers.add_parser(Gitlab.service.lower(), help="Gitlab service")
     parser_gitlab.add_argument("-u", "--user", help="Gitlab user name", required=True)
 
-    parser.add_argument(
-        "-c",
-        "--config",
-        help="Config",
-        action="store",
-    )
-
-    parser.add_argument(
-        "-n",
-        "--dry-run",
-        help="Only simulate actions",
-        action="store_true",
-        default=False,
-    )
-    parser.add_argument(
-        "-d", "--dest", help="Destination to store the repositories", required=True
-    )
+    parser.add_argument("-c", "--config", help="Config", action="store",)
+    parser.add_argument("-n", "--dry-run", help="Only simulate actions", action="store_true", default=False,)
+    parser.add_argument("-d", "--dest", help="Destination to store the repositories", required=True)
 
     prometheus = parser.add_mutually_exclusive_group()
-    prometheus.add_argument(
-        "-g", "--pushgateway", help="Prometheus pushgateway URL", action="store"
-    )
-    prometheus.add_argument(
-        "-f",
-        "--prom-file",
-        help="Prometheus nodeexporter textfile directory",
-        action="store",
-    )
+    prometheus.add_argument("-g", "--pushgateway", help="Prometheus pushgateway URL", action="store")
+    prometheus.add_argument("-f", "--prom-file", help="Prometheus nodeexporter textfile directory", action="store")
 
     return parser.parse_args()
 
@@ -89,6 +70,14 @@ def build_services_from_conf(conf: Dict) -> List[Service]:
     for service in conf:
         inst = service["service"].lower()
         del service["service"]
+
+        repo_filter = build_filter_from_conf(service)
+        if "repo_denylist" in service:
+            del service["repo_denylist"]
+        if "repo_allowlist" in service:
+            del service["repo_allowlist"]
+        service["repo_filter"] = repo_filter
+
         if inst == "github":
             impl = Github(**service)
             services.append(impl)
@@ -113,6 +102,19 @@ def verify_config(conf: Dict):
         for keyword in keywords:
             if keyword not in service:
                 raise ValueError
+
+    if "repo_denylist" and "repo_allowlist" in conf:
+        raise ValueError("Can't define both allow- and denylists")
+
+
+def build_filter_from_conf(conf: Dict) -> RepoFilter:
+    if "repo_denylist" in conf:
+        return DenyListFilter(conf["repo_denylist"])
+
+    if "repo_allowlist" in conf:
+        return AllowListFilter(conf["repo_allowlist"])
+
+    return DefaultFilter()
 
 
 def build_services_from_args(args: argparse.Namespace) -> List[Service]:

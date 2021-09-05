@@ -1,10 +1,16 @@
 [
   {
     "service": "gitlab",
-    "username": "soerenschneider"
+    "username": "soerenschneider",
+    "repo_denylist": [
+      "prometheus-rules-edge"
+    ]
   },
   {
     "service": "github",
-    "username": "soerenschneider"
+    "username": "soerenschneider",
+    "repo_allowlist": [
+      "lootorganizer"
+    ]
   }
 ]

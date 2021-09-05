@@ -17,6 +17,13 @@ prom_synced_repos = Counter(
     registry=_REGISTRY,
 )
 
+prom_ignored_repos = Counter(
+    "{prefix}_ignored_repos_total".format(prefix=_PREFIX),
+    "Amount of ignored repositories",
+    ["user", "provider"],
+    registry=_REGISTRY,
+)
+
 prom_error_cnt = Counter(
     "{prefix}_synced_repos_errors_total".format(prefix=_PREFIX),
     "Amount of errors while fetching repo",

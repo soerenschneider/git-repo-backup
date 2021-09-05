@@ -1,4 +1,5 @@
 from typing import List, Tuple
+from repo_filter import RepoFilter
 
 import requests
 
@@ -19,6 +20,9 @@ class Service:
         """ Fetches all the repositories for given user from this service. """
         raise NotImplementedError
 
+    def get_repo_filter(self):
+        return self.repo_filter
+
 
 class Github(Service):
     """
@@ -26,8 +30,9 @@ class Github(Service):
     """
     service = "Github"
 
-    def __init__(self, username: str, token=""):
+    def __init__(self, username: str, repo_filter: RepoFilter, token=""):
         self._username = username
+        self.repo_filter = repo_filter
         self._token = token
 
     def get_repo_list(self) -> List[Tuple[str, str]]:
@@ -66,8 +71,9 @@ class Gitlab(Service):
     """
     service = "Gitlab"
 
-    def __init__(self, username: str, token="", instance="gitlab.com"):
+    def __init__(self, username: str, repo_filter: RepoFilter, token="", instance="gitlab.com"):
         self._username = username
+        self.repo_filter = repo_filter
         self._token = token
         self._instance = instance
 
