@@ -1,7 +1,7 @@
 import unittest
 import os
 import urllib
-from repo_backup.metrics import push, write_to_textfile
+from git_repo_backup.metrics import push, write_to_textfile
 
 class Test_Prom(unittest.TestCase):
     prom_file_success = "/tmp/success.prom"
