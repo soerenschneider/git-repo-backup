@@ -1,0 +1,23 @@
+stages:
+  - test
+
+image: python:3-slim-buster
+
+test:systemtest:
+  stage: test
+  script:
+  - apt-get update && apt-get install -y make git
+  - make venv
+  - make systest
+
+test:integration:
+  stage: test
+  services:
+  - name: prom/pushgateway
+    alias: pushgateway
+  variables:
+    REPREP_GATEWAY: "pushgateway:9091"
+  script:
+  - apt-get update && apt-get install -y make
+  - make venv
+  - make integrationtests

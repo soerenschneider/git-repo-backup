@@ -1,0 +1,10 @@
+[
+  {
+    "service": "gitlab",
+    "username": "soerenschneider"
+  },
+  {
+    "service": "github",
+    "username": "soerenschneider"
+  }
+]
