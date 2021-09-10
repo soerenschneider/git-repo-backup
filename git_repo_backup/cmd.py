@@ -2,6 +2,7 @@ import argparse
 import logging
 import sys
 import json
+import time
 
 from typing import List, Dict
 
@@ -9,6 +10,8 @@ from backup import RepoBackup
 from service import Service, Github, Gitlab
 from git_impl import GitProvider, DryRunProvider
 from repo_filter import RepoFilter, AllowListFilter, DenyListFilter, DefaultFilter
+
+import schedule
 
 
 def start() -> None:
@@ -21,7 +24,6 @@ def start() -> None:
     if args.config:
         config = read_config(args.config)
         verify_config(config)
-
         services = build_services_from_conf(config)
     else:
         services = build_services_from_args(args)
@@ -29,9 +31,20 @@ def start() -> None:
     impl = DryRunProvider()
     if not args.dry_run:
         impl = GitProvider()
+
     fetcher = RepoBackup(services, args, impl)
     fetcher.work()
 
+    if args.daemon:
+        schedule.every(24).hours.do(fetcher.work)
+        cont = True
+        try:
+            while cont:
+                schedule.run_pending()
+                time.sleep(60)
+        except KeyboardInterrupt:
+            logging.info("Received signal, quitting")
+            cont = False
 
 def setup_logging() -> None:
     """ Sets up the logging. """
@@ -57,6 +70,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("-c", "--config", help="Config", action="store",)
     parser.add_argument("-n", "--dry-run", help="Only simulate actions", action="store_true", default=False,)
     parser.add_argument("-d", "--dest", help="Destination to store the repositories", required=True)
+    parser.add_argument("--daemon", help="Destination to store the repositories", action="store_true", default=False)
 
     prometheus = parser.add_mutually_exclusive_group()
     prometheus.add_argument("-g", "--pushgateway", help="Prometheus pushgateway URL", action="store")
@@ -103,7 +117,7 @@ def verify_config(conf: Dict):
             if keyword not in service:
                 raise ValueError
 
-    if "repo_denylist" and "repo_allowlist" in conf:
+    if "repo_denylist" in conf and "repo_allowlist" in conf:
         raise ValueError("Can't define both allow- and denylists")
 
 
@@ -120,12 +134,10 @@ def build_filter_from_conf(conf: Dict) -> RepoFilter:
 def build_services_from_args(args: argparse.Namespace) -> List[Service]:
     services = []
     if args.subparser == Gitlab.service.lower():
-        services.append(Gitlab(args.user))
+        services.append(Gitlab(args.user, repo_filter=DefaultFilter()))
+
     elif args.subparser == Github.service.lower():
-        services.append(Github(args.user))
+        services.append(Github(args.user, repo_filter=DefaultFilter()))
 
     return services
 
-
-if __name__ == "__main__":
-    start()
