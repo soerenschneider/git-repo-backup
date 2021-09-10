@@ -8,19 +8,23 @@ class Service:
     """
     Abstract class for the hoster.
     """
-    def get_service_name(self):
+    service = None
+    _username = ""
+    repo_filter = None
+
+    def get_service_name(self) -> str:
         """ Returns the identifier of this implementation. """
         return self.service
 
-    def get_user_name(self):
+    def get_user_name(self) -> str:
         """ Returns the username for this implementation. """
         return self._username
 
-    def get_repo_list(self):
+    def get_repo_list(self) -> str:
         """ Fetches all the repositories for given user from this service. """
         raise NotImplementedError
 
-    def get_repo_filter(self):
+    def get_repo_filter(self) -> RepoFilter:
         return self.repo_filter
 
 
@@ -52,7 +56,7 @@ class Github(Service):
         for repo in parsed:
             name = repo["name"]
             clone_url = repo["clone_url"]
-            if repo["private"] == True:
+            if repo["private"] is True:
                 clone_url = include_oauth_token_github(clone_url, self._token)
             repos.append((name, clone_url))
 
@@ -71,7 +75,7 @@ class Gitlab(Service):
     """
     service = "Gitlab"
 
-    def __init__(self, username: str, repo_filter: RepoFilter, token="", instance="gitlab.com"):
+    def __init__(self, username: str, repo_filter=None, token="", instance="gitlab.com"):
         self._username = username
         self.repo_filter = repo_filter
         self._token = token
