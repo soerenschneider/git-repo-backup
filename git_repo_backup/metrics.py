@@ -8,37 +8,49 @@ from prometheus_client import (
 )
 
 _REGISTRY = CollectorRegistry()
-_PREFIX = "git_repository_syncer"
+NAMESPACE = "git_repository_syncer"
+
+prom_receive_repo_list_error_cnt = Counter(
+    namespace=NAMESPACE,
+    name="repolist_errors_total",
+    documentation="Amount of errors while listing repos",
+    labelnames=["user", "provider"],
+    registry=_REGISTRY,
+)
 
 prom_synced_repos = Counter(
-    "{prefix}_synced_repos_total".format(prefix=_PREFIX),
-    "Amount of repositories fetched",
-    ["user", "provider", "operation"],
+    namespace=NAMESPACE,
+    name="synced_repos_total",
+    documentation="Amount of repositories fetched",
+    labelnames=["user", "provider", "operation"],
     registry=_REGISTRY,
 )
 
 prom_ignored_repos = Counter(
-    "{prefix}_ignored_repos_total".format(prefix=_PREFIX),
-    "Amount of ignored repositories",
-    ["user", "provider"],
+    namespace=NAMESPACE,
+    name="ignored_repos_total",
+    documentation="Amount of ignored repositories",
+    labelnames=["user", "provider", "repo"],
     registry=_REGISTRY,
 )
 
-prom_error_cnt = Counter(
-    "{prefix}_synced_repos_errors_total".format(prefix=_PREFIX),
-    "Amount of errors while fetching repo",
-    ["user", "provider", "repo_name"],
+prom_sync_error_cnt = Counter(
+    namespace=NAMESPACE,
+    name="synced_repos_errors_total",
+    documentation="Amount of errors while fetching repo",
+    labelnames=["user", "provider", "repo"],
     registry=_REGISTRY,
 )
 
 prom_finish_time = Gauge(
-    "{prefix}_finished_timestamp_seconds".format(prefix=_PREFIX),
-    "Timestamp when synchronization finished",
+    namespace=NAMESPACE,
+    name="finished_timestamp_seconds",
+    documentation="Timestamp when synchronization finished",
     registry=_REGISTRY,
 )
 
 
-def write_to_textfile(prom_file):
+def write_to_textfile(prom_file: str) -> None:
     """
     Writes the metrics to the nodeexporter textfile directory. Accepts
     a full path to write the metrics file to.
@@ -53,7 +65,7 @@ def write_to_textfile(prom_file):
     _write_to_textfile(prom_file, _REGISTRY)
 
 
-def push(gateway, job=None):
+def push(gateway: str, job=None) -> None:
     """
     Pushes the metrics to a prometheus pushgateway. Accepts the hostname
     of the pushgateway.
