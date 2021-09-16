@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.1.1](https://www.github.com/soerenschneider/git-repo-backup/compare/v1.1.0...v1.1.1) (2021-09-16)
+
+
+### Bug Fixes
+
+* fix retry function ([ec77463](https://www.github.com/soerenschneider/git-repo-backup/commit/ec774639c987caec08fc9086396d374b1cc9f239))
+
 ## [1.1.0](https://www.github.com/soerenschneider/git-repo-backup/compare/v1.0.0...v1.1.0) (2021-09-10)
 
 
