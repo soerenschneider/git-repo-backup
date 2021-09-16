@@ -97,12 +97,14 @@ class RepoBackup:
     def retry(func: Callable, args: Tuple, max_retries=2) -> None:
         for i in range(max_retries):
             try:
-                time.sleep(0.75)
                 func(*args)
                 return
             # pylint: disable=broad-except
             except Exception as err:
+                time.sleep(0.75)
                 logging.error("Caught error, retrying %d more times: %s", max_retries - i, err)
+                if i == max_retries-1:
+                    raise
 
     def fetch_single_repo(self, repo_name: str, remote_url: str, service: Service) -> None:
         if service.repo_filter.ignore_repo(repo_name):
