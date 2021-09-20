@@ -71,7 +71,7 @@ class RepoBackup:
         repos = None
         try:
             logging.info("Fetching repo list for service %s", service.get_service_name())
-            repos = service.get_repo_list()
+            repos = RepoBackup.retry(service.get_repo_list)
             logging.info("Fetched %d repos for provider %s, user %s", len(repos), service.get_service_name(), service.get_user_name())
             if not repos:
                 logging.warning("No %s repositories found for username '%s'", service.get_service_name(), service.get_user_name())
