@@ -18,3 +18,6 @@ jobs:
 
       - name: run all tests
         run: make tests
+
+      - name: run smoketest
+        run: make smoktest
