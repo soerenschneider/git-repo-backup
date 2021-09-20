@@ -7,7 +7,7 @@ import concurrent.futures
 import time
 
 from datetime import datetime
-from typing import List, Tuple, Callable
+from typing import List, Tuple, Callable, Any
 
 import requests
 
@@ -94,14 +94,17 @@ class RepoBackup:
                 logging.error("Error while synchronizing repo '%s': %s", repo_name, error)
 
     @staticmethod
-    def retry(func: Callable, args: Tuple, max_retries=2) -> None:
+    def retry(func: Callable, args=None, max_retries=4) -> Any:
+        if not args:
+            args = ()
+
         for i in range(max_retries):
             try:
-                func(*args)
-                return
+                return func(*args)
             # pylint: disable=broad-except
             except Exception as err:
-                time.sleep(0.75)
+                sleep = pow(2, i) - 1
+                time.sleep(sleep)
                 logging.error("Caught error, retrying %d more times: %s", max_retries - i, err)
                 if i == max_retries-1:
                     raise
