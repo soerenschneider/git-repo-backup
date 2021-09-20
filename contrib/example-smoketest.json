@@ -1,0 +1,9 @@
+[
+  {
+    "service": "github",
+    "username": "soerenschneider",
+    "repo_allowlist": [
+      "gobot-bme280"
+    ]
+  }
+]
