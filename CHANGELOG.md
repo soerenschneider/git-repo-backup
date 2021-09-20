@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.0](https://www.github.com/soerenschneider/git-repo-backup/compare/v1.1.1...v1.2.0) (2021-09-20)
+
+
+### Features
+
+* exp. backoff for retry, return value of func ([8b4e49e](https://www.github.com/soerenschneider/git-repo-backup/commit/8b4e49e4f0da7907f789223c50729a00bf78075a))
+* use retry for acquiring list of repos ([46f9065](https://www.github.com/soerenschneider/git-repo-backup/commit/46f906591c8c94aa5bd6c2c35250da7dc12435ab))
+
 ### [1.1.1](https://www.github.com/soerenschneider/git-repo-backup/compare/v1.1.0...v1.1.1) (2021-09-16)
 
 
