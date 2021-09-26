@@ -32,9 +32,10 @@ class RepoBackup:
         self._args = args
         self.git_impl = git_impl
 
-        if not os.path.exists(args.dest):
-            os.mkdir(args.dest)
-        self._dest = args.dest
+        dest = os.path.expanduser(args.dest)
+        if not os.path.exists(dest):
+            os.mkdir(dest)
+        self._dest = dest
 
         self.statistic = Statistics()
 
