@@ -10,6 +10,16 @@ from prometheus_client import (
 _REGISTRY = CollectorRegistry()
 NAMESPACE = "git_repository_syncer"
 
+
+prom_fetch_token_error_cnt = Counter(
+    namespace=NAMESPACE,
+    name="vault_token_fetch_errors_total",
+    documentation="Amount of errors while trying to fetch secret token from vault",
+    labelnames=["user", "provider"],
+    registry=_REGISTRY,
+)
+
+
 prom_receive_repo_list_error_cnt = Counter(
     namespace=NAMESPACE,
     name="repolist_errors_total",

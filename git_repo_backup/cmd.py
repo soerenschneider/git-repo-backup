@@ -4,12 +4,14 @@ import sys
 import json
 import time
 
-from typing import List, Dict
+from typing import List, Dict, Optional
 
 from backup import RepoBackup
 from service import Service, Github, Gitlab
 from git_impl import GitProvider, DryRunProvider
 from repo_filter import RepoFilter, AllowListFilter, DenyListFilter, DefaultFilter
+from vault import Vault
+from metrics import prom_fetch_token_error_cnt
 
 import schedule
 
@@ -92,6 +94,15 @@ def build_services_from_conf(conf: Dict) -> List[Service]:
             del service["repo_allowlist"]
         service["repo_filter"] = repo_filter
 
+        if "token" in service and "vault" in service:
+            raise ValueError("Both 'token' and 'vault' specified, must only use one source for tokens")
+
+        if "vault" in service:
+            token = read_token_from_vault(service["vault"], inst, service["username"])
+            if token:
+                service["token"] = token
+            del service["vault"]
+
         if inst == "github":
             impl = Github(**service)
             services.append(impl)
@@ -100,6 +111,18 @@ def build_services_from_conf(conf: Dict) -> List[Service]:
             services.append(impl)
 
     return services
+
+
+def read_token_from_vault(conf: Dict, service: str, username: str) -> Optional[str]:
+    try:
+        vault = Vault(**conf)
+        token = vault.read_secret()
+        return token
+    except Exception as err:
+        prom_fetch_token_error_cnt.labels(user=username, provider=service).inc()
+        logging.error("Could not extract token from vault: ", err)
+    return None
+
 
 def read_config(file_name: str) -> Dict:
     with open(file_name, 'r', encoding="utf-8") as opened:
@@ -140,4 +163,3 @@ def build_services_from_args(args: argparse.Namespace) -> List[Service]:
         services.append(Github(args.user, repo_filter=DefaultFilter()))
 
     return services
-
