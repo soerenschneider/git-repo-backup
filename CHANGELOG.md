@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.0](https://www.github.com/soerenschneider/git-repo-backup/compare/v1.2.0...v1.3.0) (2021-09-26)
+
+
+### Features
+
+* Allow reading token from vault ([ab43d0c](https://www.github.com/soerenschneider/git-repo-backup/commit/ab43d0c2fbcd6215871692d5a0ec08dbc80c241c))
+
+
+### Bug Fixes
+
+* expand home dir on dest ([53f8f4d](https://www.github.com/soerenschneider/git-repo-backup/commit/53f8f4d9d3231b4c1c0cf20c55bfb6f279bacd0b))
+
 ## [1.2.0](https://www.github.com/soerenschneider/git-repo-backup/compare/v1.1.1...v1.2.0) (2021-09-20)
 
 
