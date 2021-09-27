@@ -20,4 +20,4 @@ jobs:
         run: make tests
 
       - name: run smoketest
-        run: make smoktest
+        run: make smoketest
