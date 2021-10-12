@@ -10,7 +10,7 @@ pylint:
 	venv/bin/pip3 install pylint
 	PYTHONPATH=git_repo_backup venv/bin/pylint git_repo_backup/*.py
 
-unittest:
+unittest: venv
 	venv/bin/python3 -m unittest
 
 .PHONY: integrationtests
