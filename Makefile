@@ -11,11 +11,11 @@ pylint:
 	PYTHONPATH=git_repo_backup venv/bin/pylint git_repo_backup/*.py
 
 unittest: venv
-	venv/bin/python3 -m unittest
+	PYTHONPATH=git_repo_backup venv/bin/python3 -m unittest
 
 .PHONY: integrationtests
 integrationtests:
-	venv/bin/python3 -m unittest integrationtest/test_*.py
+	PYTHONPATH=git_repo_backup venv/bin/python3 -m unittest integrationtest/test_*.py
 
 smoketest: venv
 	PYTHONPATH=git_repo_backup venv/bin/python3 git_repo_backup -c contrib/example-smoketest.json -d /tmp
