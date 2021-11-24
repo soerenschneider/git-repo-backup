@@ -1,0 +1,14 @@
+[
+  {
+    "service": "github",
+    "username": "soerenschneider",
+    "repo_denylist": [
+      "lootorganizer"
+    ],
+    "vault": {
+      "addr": "http://localhost:8200",
+      "token": "token",
+      "path": "/secret/data/github-soerenschneider"
+    }
+  }
+]
