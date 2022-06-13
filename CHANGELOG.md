@@ -1,5 +1,17 @@
 # Changelog
 
+### [1.3.1](https://www.github.com/soerenschneider/git-repo-backup/compare/v1.3.0...v1.3.1) (2022-06-13)
+
+
+### Features
+
+* Export metrics via http when running as daemon ([6459702](https://www.github.com/soerenschneider/git-repo-backup/commit/64597022bb4036fb2aebe2e0caab4d844bb551d8))
+
+
+### Miscellaneous Chores
+
+* release 1.3.1 ([0f05274](https://www.github.com/soerenschneider/git-repo-backup/commit/0f052741b74c10f128441f16eb1d82f0b7161421))
+
 ## [1.3.0](https://www.github.com/soerenschneider/git-repo-backup/compare/v1.2.0...v1.3.0) (2021-09-26)
 
 
