@@ -76,11 +76,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("-c", "--config", help="Config", action="store",)
     parser.add_argument("-n", "--dry-run", help="Only simulate actions", action="store_true", default=False,)
     parser.add_argument("-d", "--dest", help="Destination to store the repositories", required=True)
-    parser.add_argument("--daemon", help="Destination to store the repositories", action="store_true", default=False)
+    parser.add_argument("--daemon", help="Run as a daemon", action="store_true", default=False)
 
     prometheus = parser.add_mutually_exclusive_group()
     prometheus.add_argument("-g", "--pushgateway", help="Prometheus pushgateway URL", action="store")
-    prometheus.add_argument("-f", "--prom-file", help="Prometheus nodeexporter textfile directory", action="store")
+    prometheus.add_argument("-f", "--prom-file", help="Prometheus node_exporter textfile directory", action="store")
+    prometheus.add_argument("-p", "--prom-port", type=int, help="Prometheus port to be scraped", default=9155, action="store")
 
     return parser.parse_args()
 
