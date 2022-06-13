@@ -1,7 +1,10 @@
 FROM python:3.10.5-alpine
 
-ENV USER_ID=65535
-ENV USER_NAME=gitbackup
+ARG USER_ID=65535
+ARG USER_NAME=gitbackup
+
+ENV USER_ID=$USER_ID
+ENV USER_NAME=$USER_NAME
 
 RUN adduser --shell /sbin/nologin --disabled-password \
     --no-create-home --uid $USER_ID $USER_NAME && \
