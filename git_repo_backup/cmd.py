@@ -11,9 +11,10 @@ from service import Service, Github, Gitlab
 from git_impl import GitProvider, DryRunProvider
 from repo_filter import RepoFilter, AllowListFilter, DenyListFilter, DefaultFilter
 from vault import Vault
-from metrics import prom_fetch_token_error_cnt
+from metrics import prom_fetch_token_error_cnt, _GIT_BACKUP_REGISTRY
 
 import schedule
+from prometheus_client import start_http_server, REGISTRY
 
 
 def start() -> None:
@@ -38,6 +39,9 @@ def start() -> None:
     fetcher.work()
 
     if args.daemon:
+        if args.prom_port:
+            REGISTRY.register(_GIT_BACKUP_REGISTRY)
+            start_http_server(args.prom_port)
         schedule.every(24).hours.do(fetcher.work)
         cont = True
         try:
