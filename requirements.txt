@@ -1,5 +1,5 @@
 requests==2.31.0
-GitPython==3.1.31
+GitPython==3.1.32
 prometheus-client==0.17.1
 rich==13.4.2
 schedule==1.2.0
