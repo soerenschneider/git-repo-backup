@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.2](https://github.com/soerenschneider/git-repo-backup/compare/v1.3.1...v1.3.2) (2023-09-05)
+
+
+### Miscellaneous Chores
+
+* release 1.3.2 ([a32ff71](https://github.com/soerenschneider/git-repo-backup/commit/a32ff710f13369224081326f77b2ad82c6b5dfee))
+
 ### [1.3.1](https://www.github.com/soerenschneider/git-repo-backup/compare/v1.3.0...v1.3.1) (2022-06-13)
 
 
