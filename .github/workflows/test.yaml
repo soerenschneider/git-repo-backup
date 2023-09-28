@@ -1,0 +1,18 @@
+---
+name: test
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.1.0
+
+      - name: run unit tests
+        run: make tests
+
+      - name: run smoketest
+        run: make smoketest
