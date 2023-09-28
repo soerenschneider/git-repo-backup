@@ -1,53 +1,52 @@
+# git-repo-backup
+![test-workflow](https://github.com/soerenschneider/git-repo-backup/actions/workflows/test.yaml/badge.svg)
+![release-workflow](https://github.com/soerenschneider/git-repo-backup/actions/workflows/release.yaml/badge.svg)
 
-# What
+Automated and reliable backups of your GitHub and GitLab repositories
 
+## Features
 
-# Why
-Neither is Git a viable backup nor will GitHub/Gitlab keep your repos around forever. This tool helps you auto-discover and regularly pull your git repositories from Git services such as GitHub and GitLab.
+📦 Backups remote Git repositories hosted on GitLab or GitHub<br/>
+⛵️ Automatically discovers all repositories for a given username<br/>
+🕵️ Works with public and private repositories<br/>
+🚦 Support for explicit deny- and allow-lists<br/>
+🔒 Can read Personal Access Tokens from Hashicorp Vault<br/>
+🔭 Observability provided by metrics<br/>
+
+## Roadmap
+
+🚀 Upload changes to a S3 compatible service<br/>
+
+## Why would I need this?
+
+GitHub and GitLab don't run on altruism. Your account or individual repositories may be gone overnight without notice.
+
+## Installation
+
+### Docker / Podman
+````shell
+$ git clone https://github.com/soerenschneider/git-repo-backup.git
+$ cd git-repo-backup
+$ docker run -v $(pwd)/contrib:/config ghcr.io/soerenschneider/git-repo-backup --config /config/example-config.json --dest /tmp
+````
+
+### From Source
+As a prerequisite, you need to have Python3 installed.
+```shell
+$ git clone https://github.com/soerenschneider/git-repo-backup.git
+$ cd git-repo-backup
+$ make venv
+$ ./venv/bin/python3 git_repo_backup --config contrib/example-config.json --dest /tmp
+```
 
 # Demo
 ![demo.gif](demo.gif)
 
-# CLI Example
-```
-usage: cmd.py [-h] [-c CONFIG] [-n] -d DEST [-g PUSHGATEWAY | -f PROM_FILE] {github,gitlab} ...
+# Usage and Configuration
+Head over [here](docs/configuration.md) to see config and usage examples.
 
-Clones / pulls git repositories
+# Metrics
+The exposed metrics are listed [here](docs/metrics.md).
 
-positional arguments:
-  {github,gitlab}
-    github              Github service
-    gitlab              Gitlab service
-
-optional arguments:
-  -h, --help            show this help message and exit
-  -c CONFIG, --config CONFIG
-                        Config
-  -n, --dry-run         Only simulate actions
-  -d DEST, --dest DEST  Destination to store the repositories
-  -g PUSHGATEWAY, --pushgateway PUSHGATEWAY
-                        Prometheus pushgateway URL
-  -f PROM_FILE, --prom-file PROM_FILE
-                        Prometheus nodeexporter textfile directory
-```
-
-# Configuration
-
-````json
-[
-  {
-    "service": "github",
-    "username": "soerenschneider",
-    "repo_denylist": [
-      "lootorganizer"
-    ]
-  },
-  {
-    "service": "gitlab",
-    "username": "soerenschneider",
-    "repo_allowlist": [
-      "prometheus-rules-edge"
-    ]
-  }
-]
-````
+## Changelog
+See the [full changelog](CHANGELOG.md)
