@@ -1,6 +1,6 @@
 # git-repo-backup
 ![test-workflow](https://github.com/soerenschneider/git-repo-backup/actions/workflows/test.yaml/badge.svg)
-![release-workflow](https://github.com/soerenschneider/git-repo-backup/actions/workflows/release.yaml/badge.svg)
+![release-workflow](https://github.com/soerenschneider/git-repo-backup/actions/workflows/release-container.yaml/badge.svg)
 
 Automated and reliable backups of your GitHub and GitLab repositories
 
