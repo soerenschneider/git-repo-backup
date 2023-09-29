@@ -16,8 +16,8 @@ Automated and reliable backups of your GitHub and GitLab repositories
 ## Roadmap
 
 🚀 Upload changes to a S3 compatible service<br/>
-🍵 Add GitTea service support
-🪆 Add _dummy service_ that allows a plain list of loose Git repositories 
+🍵 Add GitTea service support<br/>
+🪆 Add _dummy service_ that allows a plain list of loose Git repositories<br/>
 
 ## Why would I need this?
 
