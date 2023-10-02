@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.3](https://github.com/soerenschneider/git-repo-backup/compare/v1.3.2...v1.3.3) (2023-10-02)
+
+
+### Bug Fixes
+
+* **deps:** bump rich from 13.5.3 to 13.6.0 ([fa5bda1](https://github.com/soerenschneider/git-repo-backup/commit/fa5bda1acd77bbf5fd1c0205d6807b6145cf1c09))
+* **deps:** bump schedule from 1.2.0 to 1.2.1 ([1308398](https://github.com/soerenschneider/git-repo-backup/commit/1308398d401e4c8be6a5bb84c7fac747630118a7))
+
 ## [1.3.2](https://github.com/soerenschneider/git-repo-backup/compare/v1.3.1...v1.3.2) (2023-09-05)
 
 
