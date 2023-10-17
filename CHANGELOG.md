@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.4](https://github.com/soerenschneider/git-repo-backup/compare/v1.3.3...v1.3.4) (2023-10-17)
+
+
+### Bug Fixes
+
+* **deps:** bump python from 3.11.5-alpine to 3.12.0-alpine ([5f4e800](https://github.com/soerenschneider/git-repo-backup/commit/5f4e80098d874965987a694e0c13641390fa2d73))
+
 ## [1.3.3](https://github.com/soerenschneider/git-repo-backup/compare/v1.3.2...v1.3.3) (2023-10-02)
 
 
