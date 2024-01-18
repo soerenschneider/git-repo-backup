@@ -6,6 +6,7 @@
 ### Bug Fixes
 
 * **deps:** bump gitpython from 3.1.37 to 3.1.41 ([114f12e](https://github.com/soerenschneider/git-repo-backup/commit/114f12e0fc57a1aedd7c9a79a5ce22cfc8903955))
+* **deps:** bump prometheus-client from 0.17.1 to 0.19.0 ([6f5f3c9](https://github.com/soerenschneider/git-repo-backup/commit/6f5f3c900068e7fe1f9d98f6eba33610b2ba248b))
 * **deps:** bump python from 3.12.0-alpine to 3.12.1-alpine ([a43054b](https://github.com/soerenschneider/git-repo-backup/commit/a43054b73ecad1caa3ae3e753530e413c73c3569))
 * **deps:** bump rich from 13.6.0 to 13.7.0 ([d822977](https://github.com/soerenschneider/git-repo-backup/commit/d8229778e222e290acd91827e56d605d567b7cc9))
 
