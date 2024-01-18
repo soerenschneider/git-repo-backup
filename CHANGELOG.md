@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.3.5](https://github.com/soerenschneider/git-repo-backup/compare/v1.3.4...v1.3.5) (2024-01-18)
+
+
+### Bug Fixes
+
+* **deps:** bump gitpython from 3.1.37 to 3.1.41 ([114f12e](https://github.com/soerenschneider/git-repo-backup/commit/114f12e0fc57a1aedd7c9a79a5ce22cfc8903955))
+* **deps:** bump python from 3.12.0-alpine to 3.12.1-alpine ([a43054b](https://github.com/soerenschneider/git-repo-backup/commit/a43054b73ecad1caa3ae3e753530e413c73c3569))
+* **deps:** bump rich from 13.6.0 to 13.7.0 ([d822977](https://github.com/soerenschneider/git-repo-backup/commit/d8229778e222e290acd91827e56d605d567b7cc9))
+
 ## [1.3.4](https://github.com/soerenschneider/git-repo-backup/compare/v1.3.3...v1.3.4) (2023-10-17)
 
 
